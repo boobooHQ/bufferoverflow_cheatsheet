@@ -1,0 +1,28 @@
+So we all know a bit about bufferoverflow attacks . These are 25 marks machines in OSCP exam . If practised , one can easily solve BOF machines within few hours
+and secure those 25 marks and also we are provided with a skeleton script . So we now just need to follow a sequence of steps to get the Shell !
+
+With a bird's eye view lets see what are the steps involved in the BOF attack :
+1 - Confirm if the Application is Crashing
+2 - Generating pattern and finding the Breaking Point i.e offset value
+3 - Controlling the EIP value 
+4 - Finding Bad Characters
+5 - Find jmp esp ( or sometimes call esp )
+6 - Generate Shellcode and FIRE !!
+
+
+#before starting --check ping with the victim machine --check if the port in the script is open using nmap -p<port_number> <ip_of_victm_mchine>
+#Eg : >> ping 10.101.33.4          >> nmap -p21 10.101.33.4
+
+
+STEP 1 : confirm crash :
+--  i) using the skeleton provided , change the ip and send a lot of A's to the Vctim Mchine
+-- ii) crash confirmed !
+
+
+STEP 2 : finding exact Breaking Point : offset value
+-- i) ( On Attacker VM ) using msf create a random character array and sent to the machine and check the offset value 
+      >>msf-pattern_create -l <length_of_array>
+       
+       Copy the created array in the expoit script and paste it place of A's 
+
+-- ii)( On Victim Machine ) make sure vulnerable app is running and the process is attached to a Debugger and run it in debugger 
