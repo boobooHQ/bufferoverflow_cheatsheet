@@ -1,5 +1,5 @@
-So we all know a bit about bufferoverflow attacks . These are 25 marks machines in OSCP exam . If practised , one can easily solve BOF machines within few hours
-and secure those 25 marks and also we are provided with a skeleton script . So we now just need to follow a sequence of steps to get the Shell !
+So we all know a bit about bufferoverflow attacks . These are 25 marks machines in OSCP exam . If practised , one can easily solve BOF machines within few 
+hours and secure those 25 marks and also we are provided with a skeleton script . So we now just need to follow a sequence of steps to get the Shell !
 
 With a bird's eye view lets see what are the steps involved in the BOF attack :
 1 - Confirm if the Application is Crashing
