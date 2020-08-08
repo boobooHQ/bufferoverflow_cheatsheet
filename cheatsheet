@@ -5,7 +5,7 @@
 ##::::::>>>>>>>:::::::::::::::PATTERN::::::::::::<<<<<:::::::::::::::::::::::::::::::
 
 >> msf-pattern_create -l <lenght_of_char>
->> msf-patter_offset -g  <EIP_value>
+>> msf-patter_offset -q <EIP_value>
 
 -------------------------------------------------
 then check if we can control EIP using BBBB
@@ -18,6 +18,10 @@ then check if we can control EIP using BBBB
 >> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01B27464
 >> !mona bytearray -b "\x00\x01\x02"
 >> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO
+
+
+##::::::::::::::::::::::::::::::BAD CHARS : MANUAL WAY::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 
 
 
