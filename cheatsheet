@@ -39,6 +39,17 @@ JMP ESP value found !  \x83\x66\x52\x56
 THIS VALUE WILL COME IN PLACE OF "BBBB" ;)
 
 
+##::::::::::::::::::::::::::::::BAD CHARS : Automatic Way : Safest waY ! :::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+USE  
+>> !mona config -set workingfolder C:\logs\%p
+>> !mona bytearray     
+>> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01B27464       ====> 01B27464 is the ESP value !
+>> !mona bytearray -b "\x00\x01\x02"
+>> !mona compare -f  C:\logs\app_folder\bytearray.bin -a 01337IIO
+
+
+
 
 ##::::::::::::::::::::::::::::::BAD CHARS : MANUAL WAY:    fastest waY ! :::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
