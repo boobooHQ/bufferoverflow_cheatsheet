@@ -1,5 +1,7 @@
   FOR OSCPP :::  rdesktop -u admin -p lab 192.168.21.111 -g 1366x768
   FOR TRYHACKME  :::  xfreerdp /u:admin /p:password /cert:ignore /size:2000x1000 -wallpaper -themes /v:<IP>
+        or 
+                      RDP : >>  rdesktop -u admin -p password <ip> -g 98%
 
 >> ping
 >> nmap -p<vuln_app_port> ip 
@@ -24,24 +26,7 @@ then check if we can control EIP using BBBB
 
 
 
-##::::::::::::::::::::::::::::::::JMP ESP:::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
->> !mona modules
------> then check which module has all values as false
-
->> if dll or exe use the following command to find the jmp esp address !
-
->> !mona find -s "\xff\xe4" -m app.dll   or  >>!mona find -s "\xff\xe4" -m app.exe
-
-----------------------------------------------------
-in case no jmp esp . check for call esp ---> mona modules --> check dlls --> dubba click on any dll --> ctrl + f --> jmp esp or call esp --> note the address
-----------------------------------------------------
-
-suppose jmp esp address is 56526683 -- convert it like this--> \x83\x66\x52\x56
-
-JMP ESP value found !  \x83\x66\x52\x56
-
-THIS VALUE WILL COME IN PLACE OF "BBBB" ;) in the final exploit 
 
 
 
@@ -82,8 +67,36 @@ HOW ?
 5) Repeat until no more Bad Character !
 
 
+
+
+
+##::::::::::::::::::::::::::::::::JMP ESP:::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+>> !mona modules
+-----> then check which module has all values as false
+
+>> if dll or exe use the following command to find the jmp esp address !
+
+>> !mona find -s "\xff\xe4" -m app.dll   or  >>!mona find -s "\xff\xe4" -m app.exe
+
+----------------------------------------------------
+in case no jmp esp . check for call esp ---> mona modules --> check dlls --> dubba click on any dll --> ctrl + f --> jmp esp or call esp --> note the address
+----------------------------------------------------
+
+suppose jmp esp address is 56526683 -- convert it like this--> \x83\x66\x52\x56
+
+JMP ESP value found !  \x83\x66\x52\x56
+
+THIS VALUE WILL COME IN PLACE OF "BBBB" ;) in the final exploit 
+
+
+
+
+
+
+
 ______________________________________________****  FINAL SCENE  ****** _____________________________________________
-no more bad char
+
 
 lets create our final exploit !
 
